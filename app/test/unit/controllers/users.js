@@ -58,6 +58,27 @@ describe('Controllers: Users', () => {
                             expect(result.data.mensagem).to.be.eql(Strings.EMAIL_FIELD_NOT_FOUND)
                         });
         });
+
+        it('should return an error message if senha is not passed', () => {
+            
+            const data = {
+                nome : "nome",
+                email: "email",
+                telefones: [{ numero: "123456", ddd: "85"}]
+            };
+
+            return _usersController
+                        .create(data)
+                        .then(result => {
+                            debug(result);
+                            expect(result.statusCode).to.exist;
+                            expect(result.statusCode).to.be.eql(HttpStatus.BAD_REQUEST);
+                            expect(result.data).to.be.an('object');
+                            expect(result.data.mensagem).to.be.a('string');
+                            expect(result.data.mensagem).not.be.empty;
+                            expect(result.data.mensagem).to.be.eql(Strings.SENHA_FIELD_NOT_FOUND)
+                        });
+        });
     });
 
 })
