@@ -4,7 +4,7 @@
   "description": "Desafio de backend para a Concrete Solutions",
   "main": "server.js",
   "scripts": {
-    "dev": "jshint *.js ./app/*.js ./app/**/*.js && npm test && supervisor server",
+    "dev": "jshint *.js ./app/*.js ./app/**/*.js && DEBUG='desafio'* supervisor server",
     "lint": "jshint *.js ./app/*.js ./app/**/*.js",
     "test": "npm run unit-test",
     "unit-test": "mocha ./app/test/unit/**/*.js"
