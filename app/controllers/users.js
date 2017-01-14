@@ -1,8 +1,9 @@
-const HttpStatus = require("http-status");
-const Q = require('q');
-const moment = require('moment');
-const Strings = require('../shared/strings');
-const debug = require('../shared/debugger')('controllers: users');
+const HttpStatus        = require("http-status");
+const Q                 = require('q');
+const moment            = require('moment');
+const Strings           = require('../shared/strings');
+const debug             = require('../shared/debugger')('controllers: users');
+const ResponseHelper    = require('../shared/responseHelper');
 
 module.exports = (Users) => {
 
@@ -11,7 +12,11 @@ module.exports = (Users) => {
         debug(data);
 
         if(!data.nome)
-            return Q({ data: { mensagem: Strings.NOME_FIELD_NOT_FOUND}, statusCode: HttpStatus.BAD_REQUEST});
+            return ResponseHelper.errorResponse(Strings.NOME_FIELD_NOT_FOUND, HttpStatus.BAD_REQUEST);
+        if(!data.email)
+            return ResponseHelper.errorResponse(Strings.EMAIL_FIELD_NOT_FOUND, HttpStatus.BAD_REQUEST);
+        
+
 
         const now = moment(new Date()).format("DD/MM/YYYY HH:mm:ss");
 
@@ -22,7 +27,7 @@ module.exports = (Users) => {
         user.ultimo_login = now;
         user.token = "123";
 
-        return Q({ data: Object.assign({}, data, user), statusCode: HttpStatus.CREATED});
+        return ResponseHelper.defaultResponse(Object.assign({}, data, user), HttpStatus.CREATED);        
     }
 
 
