@@ -11,7 +11,8 @@ function defaultResponse(data, statusCode = HttpStatus.OK) {
 
 function errorResponse(mensagem, statusCode = HttpStatus.INTERNAL_SERVER_ERROR) {
 
-    if(statusCode == HttpStatus.INTERNAL_SERVER_ERROR) {   
+    debug('error: %j', mensagem );
+    if(statusCode == HttpStatus.INTERNAL_SERVER_ERROR) {    
         
         mensagem = Strings.INTERNAL_SERVER_ERROR;
     }
