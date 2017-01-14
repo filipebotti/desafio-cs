@@ -1,6 +1,11 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 
+//Data Sources
+const MongoDS = require('./data-sources/mongoDS');
+
+MongoDS.initialize();
+
 //Routes
 const usersRoute = require('./routes/users');
 
