@@ -33,7 +33,6 @@ describe('Controllers: Users', () => {
                             expect(result.data.mensagem).to.be.a('string');
                             expect(result.data.mensagem).not.be.empty;
                             expect(result.data.mensagem).to.be.eql(Strings.NOME_FIELD_NOT_FOUND)
-
                         });
         });
     });
