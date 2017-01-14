@@ -122,6 +122,46 @@ describe('Controllers: Users', () => {
                             expect(result.data.mensagem).to.be.eql(Strings.TELEFONE_FIELD_AT_LEAST_ONE)
                         });
         });
+
+        it('telefones should have length at least one', () => {
+            
+            const data = {
+                nome : "nome",
+                email: "email",
+                senha: "senha",
+                telefones: [{}]
+            };
+
+            return _usersController
+                        .create(data)
+                        .then(result => {
+                            expect(result.data).to.be.an('object');
+                            expect(result.data.telefones).to.be.a('array');
+                            expect(result.data.telefones).not.be.empty;
+                            expect(result.data.telefones).to.have.length.of.at.least(1);
+                        });
+        });
+
+        it('should return an error message if telefones are not valid', () => {
+            const data = {
+                nome : "nome",
+                email: "email",
+                senha: "senha",
+                telefones: [{}]
+            };
+            
+            return _usersController
+                        .create(data)
+                        .then(result => {
+                            expect(result.statusCode).to.exist;
+                            expect(result.statusCode).to.be.eql(HttpStatus.BAD_REQUEST);
+                            expect(result.data).to.be.an('object');
+                            expect(result.data.mensagem).to.be.a('string');
+                            expect(result.data.mensagem).not.be.empty;
+                            expect(result.data.mensagem).to.be.eql(Strings.TELEFONE_FIELD_NOT_VALID)
+                        });
+
+        });
     });
 
 })
