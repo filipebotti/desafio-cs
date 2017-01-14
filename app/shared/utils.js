@@ -21,7 +21,7 @@ function isValidPhone(phone) {
 	if (typeof phone !== 'string')
 		return false;
 
-	return /^\(?\d{2}\)?\ *[9]?\d{4}\-?\d{4}$/.test(phone);
+	return /^([0-9]{4,5})[-. ]?([0-9]{4})$/.test(phone);
 }
 
-module.exports = { isValidEmail, isValidPhone, isValidName };
+module.exports = { isValidEmail, isValidPhone };

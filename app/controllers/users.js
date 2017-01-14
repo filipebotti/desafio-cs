@@ -4,6 +4,7 @@ const moment            = require('moment');
 const Strings           = require('../shared/strings');
 const debug             = require('../shared/debugger')('controllers: users');
 const ResponseHelper    = require('../shared/responseHelper');
+const Utils             = require('../shared/utils');
 
 module.exports = (Users) => {
 
@@ -21,6 +22,20 @@ module.exports = (Users) => {
             return ResponseHelper.errorResponse(Strings.TELEFONE_FIELD_NOT_FOUND, HttpStatus.BAD_REQUEST);
         if(data.telefones.length == 0)
             return ResponseHelper.errorResponse(Strings.TELEFONE_FIELD_AT_LEAST_ONE, HttpStatus.BAD_REQUEST);
+        
+        for(let i = 0; i < data.telefones.length; i++) {
+            const telefone = data.telefones[i];
+
+            if(!telefone.numero || !telefone.ddd)
+                return ResponseHelper.errorResponse(Strings.TELEFONE_FIELD_NOT_VALID, HttpStatus.BAD_REQUEST);
+            
+            if(!Utils.isValidPhone(telefone.numero))
+                return ResponseHelper.errorResponse(Strings.TELEFONE_FIELD_NOT_VALID, HttpStatus.BAD_REQUEST);
+
+            if(telefone.ddd.length !== 2)
+                return ResponseHelper.errorResponse(Strings.TELEFONE_FIELD_NOT_VALID, HttpStatus.BAD_REQUEST);
+
+        }
         
 
 
