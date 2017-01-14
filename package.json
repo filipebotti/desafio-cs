@@ -1,0 +1,21 @@
+{
+  "name": "desafio-cs",
+  "version": "1.0.0",
+  "description": "Desafio de backend para a Concrete Solutions",
+  "main": "server.js",
+  "scripts": {
+    "dev": "jshint *.js ./app/*.js ./app/**/*.js && supervisor server",
+    "lint": "jshint *.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Filipe Estanieski Botti",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "http-status": "^0.2.3"
+  },
+  "devDependencies": {
+    "jshint": "^2.9.4"
+  }
+}
