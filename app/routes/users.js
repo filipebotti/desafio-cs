@@ -8,8 +8,8 @@ module.exports = (app) => {
     app
         .route('/users')
         .post((request, response) => {
-            usersController
+            usersController 
                 .create(request.body)
                 .then(res => response.status(res.statusCode).send(res.data));
-        })
+        });
 };
