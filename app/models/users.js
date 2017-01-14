@@ -35,4 +35,8 @@ const schema = new Schema({
     token: {
         type: String,
     }
-})
+});
+
+const Users = mongoose.model('users', schema);
+
+module.exports = Users;
