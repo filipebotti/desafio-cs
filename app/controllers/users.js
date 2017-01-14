@@ -17,6 +17,10 @@ module.exports = (Users) => {
             return ResponseHelper.errorResponse(Strings.EMAIL_FIELD_NOT_FOUND, HttpStatus.BAD_REQUEST);
         if(!data.senha)
             return ResponseHelper.errorResponse(Strings.SENHA_FIELD_NOT_FOUND, HttpStatus.BAD_REQUEST);
+        if(!data.telefones)
+            return ResponseHelper.errorResponse(Strings.TELEFONE_FIELD_NOT_FOUND, HttpStatus.BAD_REQUEST);
+        if(!data.telefones.length == 0)
+            return ResponseHelper.errorResponse(Strings.TELEFONE_FIELD_AT_LEAST_ONE, HttpStatus.BAD_REQUEST);
         
 
 
