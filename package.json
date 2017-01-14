@@ -4,9 +4,10 @@
   "description": "Desafio de backend para a Concrete Solutions",
   "main": "server.js",
   "scripts": {
-    "dev": "jshint *.js ./app/*.js ./app/**/*.js && supervisor server",
+    "dev": "jshint *.js ./app/*.js ./app/**/*.js && npm test && supervisor server",
     "lint": "jshint *.js ./app/*.js ./app/**/*.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "npm run unit-test",
+    "unit-test": "mocha ./app/test/unit/**/*.js"
   },
   "author": "Filipe Estanieski Botti",
   "license": "ISC",
@@ -14,9 +15,13 @@
     "body-parser": "^1.15.2",
     "express": "^4.14.0",
     "http-status": "^0.2.3",
+    "moment": "^2.17.1",
     "q": "^1.4.1"
   },
   "devDependencies": {
-    "jshint": "^2.9.4"
+    "chai": "^3.5.0",
+    "chai-as-promised": "^6.0.0",
+    "jshint": "^2.9.4",
+    "mocha": "^3.2.0"
   }
 }
