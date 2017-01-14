@@ -123,7 +123,7 @@ describe('Controllers: Users', () => {
                 nome : "nome",
                 email: "email",
                 senha: "senha",
-                telefones: [{ numero: "996614898", ddd: "85"}]
+                telefones: [{ numero: "9898", ddd: "85"}]
             };
             
             return _usersController
