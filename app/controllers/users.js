@@ -5,6 +5,8 @@ const Strings           = require('../shared/strings');
 const debug             = require('../shared/debugger')('controllers: users');
 const ResponseHelper    = require('../shared/responseHelper');
 const Utils             = require('../shared/utils');
+const config            = require('../shared/config');
+const jwt               = require('jwt-simple');
 
 module.exports = (Users) => {
 
@@ -38,27 +40,34 @@ module.exports = (Users) => {
                 return ResponseHelper.errorResponse(Strings.TELEFONE_FIELD_NOT_VALID, HttpStatus.BAD_REQUEST);
 
         }
+        let now = new Date();
+        const tokenExpiration = new Date(now.setMinutes(now.getMinutes() + 30));
 
-        let user = Object.assign({}, data);
-        user.token = "123";
+        debug('now : %j', now);
+        debug('expirationTime: %j', tokenExpiration);
 
-        debug("users");
+        let userToAdd = Object.assign({}, data);
+        userToAdd.token = jwt.encode({ expirationTime: tokenExpiration}, config.jwtSecret);
+
+        debug("user: %j", userToAdd);
+
         return Users
                 .findOne({ email: data.email})
                 .then(user => 
                     { 
                         debug("find one user: %j" , user);
-                        if(user._id) 
+                        if(user && user._id) 
                             return Q.reject({ mensagem: Strings.USER_ALREADY_EXISTS, statusCode: HttpStatus.BAD_REQUEST});
-                        else
-                            return Q();
+
+                        return Q();
                 })                    
                 .then(() => {
-                    return Users.create(data);
+                    debug("create");
+                    return Users.create(userToAdd);
                 })
                 .then(user => Users.findOne({ _id: user._id}))
                 .then(user => ResponseHelper.defaultResponse(user, HttpStatus.CREATED))
-                .catch(error => ResponseHelper.errorResponse(error.mensagem, error.statusCode));     
+                .catch(error => ResponseHelper.errorResponse(error.mensagem, error.statusCode));   
     }
 
 
