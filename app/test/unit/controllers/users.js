@@ -150,6 +150,7 @@ describe('Controllers: Users', () => {
             return _usersController
                         .create(data)
                         .then(result => {
+
                             expect(result.statusCode).to.exist;
                             expect(result.statusCode).to.be.eql(HttpStatus.BAD_REQUEST);
                             expect(result.data).to.be.an('object');
@@ -167,7 +168,22 @@ describe('Controllers: Users', () => {
 
             expect(_usersController.auth).to.exist;
             expect(_usersController.auth).to.be.a('function');
-        })
+        });
+
+        it('should return an error message if email field is not passed', () => {
+
+            return _usersController
+                        .auth({})
+                        .then((result) => {
+                            
+                            expect(result.statusCode).to.exist;
+                            expect(result.statusCode).to.be.eql(HttpStatus.BAD_REQUEST);
+                            expect(result.data).to.be.an('object');
+                            expect(result.data.mensagem).not.be.empty;
+                            expect(result.data.mensagem).to.be.a('string');
+                            expect(result.data.mensagem).to.be.eql(Strings.EMAIL_FIELD_NOT_FOUND)
+                        });
+        });
     });
 
 })
