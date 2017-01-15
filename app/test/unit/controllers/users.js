@@ -189,7 +189,7 @@ describe('Controllers: Users', () => {
 
             const data = {
                 email: "some@email.com"
-            }
+            };
 
             return _usersController
                         .auth(data)
