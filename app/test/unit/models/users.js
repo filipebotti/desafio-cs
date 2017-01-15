@@ -39,5 +39,16 @@ describe('Models: Users', () => {
             expect(result).to.be.a('boolean');
             expect(result).to.be.true;
         });
+
+        it('should return false if password not match', () => {
+
+            const password = Users.generatePassword("123desafio");
+
+            const result = Users.isPasswordEqual("123", password);
+
+            expect(result).to.be.a('boolean');
+            expect(result).to.be.false;
+        });
+
     });
 });
