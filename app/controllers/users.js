@@ -71,7 +71,8 @@ module.exports = (Users) => {
     }
 
     function auth(data) {
-
+        if(!data.email)
+            return ResponseHelper.errorResponse(Strings.EMAIL_FIELD_NOT_FOUND, HttpStatus.BAD_REQUEST);
     }
 
     return { create, auth };
