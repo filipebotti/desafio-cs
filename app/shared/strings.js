@@ -9,6 +9,8 @@ const content = {
     INTERNAL_SERVER_ERROR       : "Ops! Algo não funcionou como esperado.",
     USER_ALREADY_EXISTS         : "Email já existente",
     INVALID_CREDENTIALS         : "Usuário e/ou senha inválidos",
+    UNAUTHORIZED                : "Não autorizado",
+    INVALID_SESSION             : "Sessão inválida"
 };
 
 module.exports = content;

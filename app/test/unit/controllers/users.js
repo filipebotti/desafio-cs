@@ -263,4 +263,27 @@ describe('Controllers: Users', () => {
         }))
     });
 
-})
+    describe('getById()', () => {
+        it("should exist and be a function", () => {        
+
+            expect(_usersController.getById).to.exist;
+            expect(_usersController.getById).to.be.a('function');
+        });
+
+        it("should return an error message if token in headers", () => {
+
+            return _usersController
+                        .getById({})
+                        .then((result) => {
+
+                            expect(result.statusCode).to.exist;
+                            expect(result.statusCode).to.be.eql(HttpStatus.UNAUTHORIZED);
+                            expect(result.data).to.be.an('object');
+                            expect(result.data.mensagem).to.be.a('string');
+                            expect(result.data.mensagem).not.be.empty;
+                            expect(result.data.mensagem).to.be.eql(Strings.UNAUTHORIZED);
+                        });
+        });
+    });
+
+});
