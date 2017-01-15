@@ -1,10 +1,16 @@
-const Strings   = require('../shared/strings');
-const Q         = require('q');
-const moment    = require('moment');
+const Strings       = require('../shared/strings');
+const Q             = require('q');
+const moment        = require('moment');
+const Guid          = require('guid');
+const jsonSelect    = require('mongoose-json-select');
 
 const Schema = mongoose.Schema;
 
 const schema = new Schema({
+    _id: {
+        type: String,
+        default: Guid.raw()
+    },
     nome: {
         type: String,
         required: [true, Strings.NOME_FIELD_NOT_FOUND]
@@ -26,7 +32,7 @@ const schema = new Schema({
         default: new Date()
     },
     data_atualizacao: {
-        type: Date,
+        type: Date,        
     },
     ultimo_login: {
         type: Date,
@@ -36,6 +42,8 @@ const schema = new Schema({
         type: String,
     }
 });
+
+schema.plugin(jsonSelect, '-senha -__v');
 
 const Users = mongoose.model('users', schema);
 
