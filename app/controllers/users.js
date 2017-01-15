@@ -40,10 +40,10 @@ module.exports = (Users) => {
                 return ResponseHelper.errorResponse(Strings.TELEFONE_FIELD_NOT_VALID, HttpStatus.BAD_REQUEST);
 
         }
-        let now = new Date();
-        const tokenExpiration = new Date(now.setMinutes(now.getMinutes() + 30));
-
+        let now = moment(new Date());
         debug('now : %j', now);
+
+        const tokenExpiration = now.add(30, 'minute');        
         debug('expirationTime: %j', tokenExpiration);
 
         let userToAdd = Object.assign({}, data);
@@ -65,7 +65,7 @@ module.exports = (Users) => {
                     debug("create");
                     return Users.create(userToAdd);
                 })
-                .then(user => Users.findOne({ _id: user._id}))
+                .then(user => Users.findOne({ _id: user._id}, {senha: 0}))
                 .then(user => ResponseHelper.defaultResponse(user, HttpStatus.CREATED))
                 .catch(error => ResponseHelper.errorResponse(error.mensagem, error.statusCode));   
     }

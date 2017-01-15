@@ -43,7 +43,7 @@ const schema = new Schema({
     }
 });
 
-schema.plugin(jsonSelect, '-senha -__v');
+schema.plugin(jsonSelect, '-__v');
 
 const Users = mongoose.model('users', schema);
 
