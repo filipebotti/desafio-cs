@@ -284,6 +284,25 @@ describe('Controllers: Users', () => {
                             expect(result.data.mensagem).to.be.eql(Strings.UNAUTHORIZED);
                         });
         });
+
+        it("should return an error message if token is not valid", () => {
+
+            const data ={
+                token : "123toke",
+            };
+
+            return _usersController
+                        .getById(data)
+                        .then((result) => {
+
+                            expect(result.statusCode).to.exist;
+                            expect(result.statusCode).to.be.eql(HttpStatus.UNAUTHORIZED);
+                            expect(result.data).to.be.an('object');
+                            expect(result.data.mensagem).to.be.a('string');
+                            expect(result.data.mensagem).not.be.empty;
+                            expect(result.data.mensagem).to.be.eql(Strings.UNAUTHORIZED);
+                        });
+        });
     });
 
 });
