@@ -6,16 +6,6 @@ function isValidEmail(email) {
 	return /^[0-9a-zA-Z]+([\_\.\-]?[0-9a-zA-Z]+)*\@[0-9a-zA-Z]+[0-9a-zA-Z\.\-]*\.[a-zA-Z]{2,}$/.test(email);
 }
 
-function isValidName(name) {
-
-	if (typeof name !== 'string')
-		return false;
-
-	return !( /^(?=.*[\!\@\#\$\%\&\*\(\)\'\"\\\|\]\}\[\{\;\:\/\?\>]).+$/.test(name) )
-		&& /^.{3,50}$/.test(name);
-}
-
-
 function isValidPhone(phone) {
 
 	if (typeof phone !== 'string')
