@@ -7,7 +7,7 @@
     "dev": "jshint *.js ./app/*.js ./app/**/*.js && DEBUG='desafio'* supervisor server",
     "lint": "jshint *.js ./app/*.js ./app/**/*.js",
     "test": "npm run unit-test",
-    "unit-test": "mocha ./app/test/unit/**/*.js"
+    "unit-test": "mocha --opts ./app/test/unit/mocha.opts ./app/test/unit/**/*.js"
   },
   "author": "Filipe Estanieski Botti",
   "license": "ISC",

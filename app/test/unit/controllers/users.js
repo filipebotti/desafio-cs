@@ -20,7 +20,7 @@ describe('Controllers: Users', () => {
         it('should return an error message if nome is not passed', () => {
             
             const data = {
-                email : "email",
+                email : "filipebotti@hotmail.com",
                 senha : "senha",
                 telefones: [{ numero: "123456", ddd: "85"}]
             };
@@ -57,11 +57,32 @@ describe('Controllers: Users', () => {
                         });
         });
 
+        it('should return an error message if email is not valid', () => {
+            
+            const data = {
+                nome : "nome",
+                senha : "senha",
+                email: "email",
+                telefones: [{ numero: "123456", ddd: "85"}]
+            };
+
+            return _usersController
+                        .create(data)
+                        .then(result => {
+                            expect(result.statusCode).to.exist;
+                            expect(result.statusCode).to.be.eql(HttpStatus.BAD_REQUEST);
+                            expect(result.data).to.be.an('object');
+                            expect(result.data.mensagem).to.be.a('string');
+                            expect(result.data.mensagem).not.be.empty;
+                            expect(result.data.mensagem).to.be.eql(Strings.EMAIL_FIELD_NOT_VALID)
+                        });
+        });
+
         it('should return an error message if senha is not passed', () => {
             
             const data = {
                 nome : "nome",
-                email: "email",
+                email: "filipebotti@hotmail.com",
                 telefones: [{ numero: "123456", ddd: "85"}]
             };
 
@@ -81,7 +102,7 @@ describe('Controllers: Users', () => {
             
             const data = {
                 nome : "nome",
-                email: "email",
+                email: "filipebotti@hotmail.com",
                 senha: "senha",
             };
 
@@ -101,7 +122,7 @@ describe('Controllers: Users', () => {
             
             const data = {
                 nome : "nome",
-                email: "email",
+                email: "filipebotti@hotmail.com",
                 senha: "senha",
                 telefones: []
             };
@@ -121,7 +142,7 @@ describe('Controllers: Users', () => {
         it('should return an error message if telefones are not valid', () => {
             const data = {
                 nome : "nome",
-                email: "email",
+                email: "filipebotti@hotmail.com",
                 senha: "senha",
                 telefones: [{ numero: "9898", ddd: "85"}]
             };
