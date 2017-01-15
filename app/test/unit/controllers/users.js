@@ -5,6 +5,9 @@ const UsersController   = require('../../../controllers/users');
 const { expect }        = require('chai');
 const Strings           = require('../../../shared/strings');
 const debug             = require('../../../shared/debugger')('unitTest-controllers:users');
+const jwt               = require('jwt-simple');
+const config            = require('../../../shared/config');
+const moment            = require('moment');
 // const sinon             = require('sinon');
 
 describe('Controllers: Users', () => {
@@ -288,7 +291,7 @@ describe('Controllers: Users', () => {
         it("should return an error message if token is not valid", () => {
 
             const data ={
-                token : "123toke",
+                token : "123token",
             };
 
             return _usersController
@@ -303,6 +306,25 @@ describe('Controllers: Users', () => {
                             expect(result.data.mensagem).to.be.eql(Strings.UNAUTHORIZED);
                         });
         });
+
+        it("should return an erro message if user not found", () => {
+             const data = {
+                 token: jwt.encode({ expirationTime: moment(new Date())}, config.jwtSecret),
+                 id: "sampleid"
+             };
+
+             return _usersController
+                        .getById(data)
+                        .then((result) => {
+
+                            expect(result.statusCode).to.exist;
+                            expect(result.statusCode).to.be.eql(HttpStatus.UNAUTHORIZED);
+                            expect(result.data).to.be.an('object');
+                            expect(result.data.mensagem).to.be.a('string');
+                            expect(result.data.mensagem).not.be.empty;
+                            expect(result.data.mensagem).to.be.eql(Strings.USER_NOT_FOUND);
+                        });
+        })
     });
 
 });
