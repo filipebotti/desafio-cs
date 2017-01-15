@@ -165,8 +165,8 @@ describe('Controllers: Users', () => {
 
         it('should exist and be a function', () => {
 
-            expect(Users.auth).to.exist;
-            expect(Users.auth).to.be.a('function');
+            expect(_usersController.auth).to.exist;
+            expect(_usersController.auth).to.be.a('function');
         })
     });
 
