@@ -70,7 +70,10 @@ module.exports = (Users) => {
                 .catch(error => ResponseHelper.errorResponse(error.mensagem, error.statusCode));   
     }
 
+    function auth(data) {
 
-    return { create };
+    }
+
+    return { create, auth };
 
 };
