@@ -16,6 +16,8 @@ module.exports = (app) => {
     app
         .route('/users/signin')
         .post((request, response) => {
-            
+            usersController
+                .auth(request.body)
+                .then(res => response.status(res.statusCode).send(res.data));
         });
 };

@@ -73,6 +73,17 @@ module.exports = (Users) => {
     function auth(data) {
         if(!data.email)
             return ResponseHelper.errorResponse(Strings.EMAIL_FIELD_NOT_FOUND, HttpStatus.BAD_REQUEST);
+        if(!data.senha)
+            return ResponseHelper.errorResponse(Strings.SENHA_FIELD_NOT_FOUND, HttpStatus.BAD_REQUEST);
+
+        debug("auth");
+        return Users
+                .findOne({ email : data.email })
+                .then(user => {
+                    if(!user || !user._id)
+                        return ResponseHelper.errorResponse(Strings.INVALID_CREDENTIALS, HttpStatus.UNAUTHORIZED);
+                });
+
     }
 
     return { create, auth };
