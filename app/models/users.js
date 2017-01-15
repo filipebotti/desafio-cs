@@ -45,6 +45,11 @@ const schema = new Schema({
 
 schema.plugin(jsonSelect, '-__v');
 
+schema.statics.generatePassword = function generatePassword(value) {
+
+    
+};
+
 const Users = mongoose.model('users', schema);
 
 module.exports = Users;
