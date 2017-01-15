@@ -3,6 +3,7 @@ const Q             = require('q');
 const moment        = require('moment');
 const Guid          = require('guid');
 const jsonSelect    = require('mongoose-json-select');
+const crypto        = require('crypto');
 
 const Schema = mongoose.Schema;
 
@@ -47,7 +48,7 @@ schema.plugin(jsonSelect, '-__v');
 
 schema.statics.generatePassword = function generatePassword(value) {
 
-    
+    return crypto.createHash('md5').update(value).digest('hex').toUpperCase();
 };
 
 const Users = mongoose.model('users', schema);
