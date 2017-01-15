@@ -40,7 +40,7 @@ module.exports = (Users) => {
                 return ResponseHelper.errorResponse(Strings.TELEFONE_FIELD_NOT_VALID, HttpStatus.BAD_REQUEST);
 
         }
-        
+
         let now = moment(new Date());
         const tokenExpiration = now.add(30, 'minute');        
 
@@ -59,7 +59,7 @@ module.exports = (Users) => {
 
                         return Users.create(userToAdd)
                                 .then(user => Users.findOne({ _id: user._id}, {senha: 0}))
-                                .then(user => ResponseHelper.defaultResponse(user, HttpStatus.CREATED))
+                                .then(user => ResponseHelper.defaultResponse(user, HttpStatus.CREATED));
                 })
                 .catch(error => ResponseHelper.errorResponse(error));   
     }
@@ -78,7 +78,7 @@ module.exports = (Users) => {
                         return ResponseHelper.errorResponse(Strings.INVALID_CREDENTIALS, HttpStatus.UNAUTHORIZED);
                     
                     const tokenExpirationTime = moment(new Date()).add(30, 'minute');
-                    user.token = jwt.encode({ expirationTime: tokenExpirationTime }, config.jwtSecret);
+                    user.token = jwt.encode({ expirationTime: tokenExpirationTime, id: user._id }, config.jwtSecret);
                     user.ultimo_login = moment(new Date());
                     user.data_atualizacao = user.ultimo_login;
 
@@ -90,6 +90,13 @@ module.exports = (Users) => {
 
     }
 
-    return { create, auth };
+    function getById(data) {
+
+        if(!data.token)
+            return ResponseHelper.errorResponse(Strings.UNAUTHORIZED, HttpStatus.UNAUTHORIZED);        
+        
+    }
+
+    return { create, auth, getById };
 
 };
