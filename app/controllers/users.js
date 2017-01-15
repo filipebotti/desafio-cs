@@ -80,7 +80,7 @@ module.exports = (Users) => {
         return Users
                 .findOne({ email : data.email })
                 .then(user => {
-                    if(!user || !user._id)
+                    if(!user || !user._id || !Users.isPasswordEqual(data.senha, user.senha))
                         return ResponseHelper.errorResponse(Strings.INVALID_CREDENTIALS, HttpStatus.UNAUTHORIZED);
                 });
 
