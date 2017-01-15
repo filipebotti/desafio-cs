@@ -36,19 +36,15 @@ module.exports = (Users) => {
                 return ResponseHelper.errorResponse(Strings.TELEFONE_FIELD_NOT_VALID, HttpStatus.BAD_REQUEST);
 
         }
-        
 
-
-        const now = moment(new Date()).format("DD/MM/YYYY HH:mm:ss");
-
-        let user = {};
-        user.id = "123";
-        user.data_criacao = now;
-        user.data_atualizacao = now;
-        user.ultimo_login = now;
+        let user = Object.assign({}, data);
         user.token = "123";
 
-        return ResponseHelper.defaultResponse(Object.assign({}, data, user), HttpStatus.CREATED);        
+        return Users
+                .create(user)
+                .then(user => Users.findOne({ _id: user._id}))
+                .then(user => ResponseHelper.defaultResponse(user, HttpStatus.CREATED))
+                .catch(error => ResponseHelper.errorResponse(error));     
     }
 
 
