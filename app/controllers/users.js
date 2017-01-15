@@ -40,11 +40,9 @@ module.exports = (Users) => {
                 return ResponseHelper.errorResponse(Strings.TELEFONE_FIELD_NOT_VALID, HttpStatus.BAD_REQUEST);
 
         }
+        
         let now = moment(new Date());
-        debug('now : %j', now);
-
         const tokenExpiration = now.add(30, 'minute');        
-        debug('expirationTime: %j', tokenExpiration);
 
         let userToAdd = Object.assign({}, data);
         userToAdd.token = jwt.encode({ expirationTime: tokenExpiration}, config.jwtSecret);
@@ -56,32 +54,38 @@ module.exports = (Users) => {
                 .then(user => 
                     { 
                         debug("find one user: %j" , user);
-                        if(user && user._id) 
-                            return Q.reject({ mensagem: Strings.USER_ALREADY_EXISTS, statusCode: HttpStatus.BAD_REQUEST});
+                        if(user && user._id)
+                            return ResponseHelper.errorResponse(Strings.USER_ALREADY_EXISTS, HttpStatus.BAD_REQUEST);                             
 
-                        return Q();
-                })                    
-                .then(() => {
-                    debug("create");
-                    return Users.create(userToAdd);
+                        return Users.create(userToAdd)
+                                .then(user => Users.findOne({ _id: user._id}, {senha: 0}))
+                                .then(user => ResponseHelper.defaultResponse(user, HttpStatus.CREATED))
                 })
-                .then(user => Users.findOne({ _id: user._id}, {senha: 0}))
-                .then(user => ResponseHelper.defaultResponse(user, HttpStatus.CREATED))
-                .catch(error => ResponseHelper.errorResponse(error.mensagem, error.statusCode));   
+                .catch(error => ResponseHelper.errorResponse(error));   
     }
 
     function auth(data) {
+
         if(!data.email)
             return ResponseHelper.errorResponse(Strings.EMAIL_FIELD_NOT_FOUND, HttpStatus.BAD_REQUEST);
         if(!data.senha)
             return ResponseHelper.errorResponse(Strings.SENHA_FIELD_NOT_FOUND, HttpStatus.BAD_REQUEST);
 
-        debug("auth");
         return Users
                 .findOne({ email : data.email })
                 .then(user => {
                     if(!user || !user._id || !Users.isPasswordEqual(data.senha, user.senha))
                         return ResponseHelper.errorResponse(Strings.INVALID_CREDENTIALS, HttpStatus.UNAUTHORIZED);
+                    
+                    const tokenExpirationTime = moment(new Date()).add(30, 'minute');
+                    user.token = jwt.encode({ expirationTime: tokenExpirationTime }, config.jwtSecret);
+                    user.ultimo_login = moment(new Date());
+                    user.data_atualizacao = user.ultimo_login;
+
+                    return user.save()
+                            .then(user => Users.findOne({ _id: user._id }, { senha: 0}))
+                            .then(user => ResponseHelper.defaultResponse(user, HttpStatus.OK));                    
+                        
                 });
 
     }
