@@ -215,7 +215,7 @@ describe('Controllers: Users', () => {
             this.mock(Users)
                 .expects('findOne')                
                 .chain('exec')
-                .resolves(null)
+                .resolves(null);
 
             return _usersController
                         .auth(data)
@@ -229,6 +229,38 @@ describe('Controllers: Users', () => {
                             expect(result.data.mensagem).to.be.eql(Strings.INVALID_CREDENTIALS);
                         });
         }));
+
+        it('should return an error message if password not match', sinon.test(function() {
+
+            const data = {
+                email: "some@email.com",
+                senha: "some#password"
+            };
+
+            const foundUser = {
+                email: "some@email.com",
+                senha: "D3BCEC7CE184C002B1CE7805CF36F333" //md5 for 123desafio
+            };
+
+            this.mock(Users)
+                .expects('findOne')                
+                .chain('exec')
+                .resolves(foundUser);
+
+            return _usersController
+                        .auth(data)
+                        .then((result) => {
+
+                            expect(result.statusCode).to.exist;
+                            expect(result.statusCode).to.be.eql(HttpStatus.UNAUTHORIZED);
+                            expect(result.data).to.be.an('object');
+                            expect(result.data.mensagem).to.be.a('string');
+                            expect(result.data.mensagem).not.be.empty;
+                            expect(result.data.mensagem).to.be.eql(Strings.INVALID_CREDENTIALS);
+                        });
+
+
+        }))
     });
 
 })
