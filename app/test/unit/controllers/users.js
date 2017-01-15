@@ -161,4 +161,13 @@ describe('Controllers: Users', () => {
         });
     });
 
+    describe('auth()',() => {
+
+        it('should exist and be a function', () => {
+
+            expect(Users.auth).to.exist;
+            expect(Users.auth).to.be.a('function');
+        })
+    });
+
 })
