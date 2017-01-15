@@ -6,6 +6,6 @@ const config = {
 	mongoPort: '27017',
 };
 
-config.mongoURL = "mongodb://" + config.mongoIp + ":" + config.mongoPort + "/" + config.dbInMongo
+config.mongoURL = "mongodb://" + config.mongoIp + ":" + config.mongoPort + "/" + config.dbInMongo;
 
 module.exports = config;

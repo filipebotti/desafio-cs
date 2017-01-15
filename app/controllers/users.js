@@ -22,7 +22,7 @@ module.exports = (Users) => {
             return ResponseHelper.errorResponse(Strings.SENHA_FIELD_NOT_FOUND, HttpStatus.BAD_REQUEST);
         if(!data.telefones)
             return ResponseHelper.errorResponse(Strings.TELEFONE_FIELD_NOT_FOUND, HttpStatus.BAD_REQUEST);
-        if(data.telefones.length == 0)
+        if(data.telefones.length === 0)
             return ResponseHelper.errorResponse(Strings.TELEFONE_FIELD_AT_LEAST_ONE, HttpStatus.BAD_REQUEST);
         
         for(let i = 0; i < data.telefones.length; i++) {
@@ -42,11 +42,23 @@ module.exports = (Users) => {
         let user = Object.assign({}, data);
         user.token = "123";
 
+        debug("users");
         return Users
-                .create(user)
+                .findOne({ email: data.email})
+                .then(user => 
+                    { 
+                        debug("find one user: %j" , user);
+                        if(user._id) 
+                            return Q.reject({ mensagem: Strings.USER_ALREADY_EXISTS, statusCode: HttpStatus.BAD_REQUEST});
+                        else
+                            return Q();
+                })                    
+                .then(() => {
+                    return Users.create(data);
+                })
                 .then(user => Users.findOne({ _id: user._id}))
                 .then(user => ResponseHelper.defaultResponse(user, HttpStatus.CREATED))
-                .catch(error => ResponseHelper.errorResponse(error));     
+                .catch(error => ResponseHelper.errorResponse(error.mensagem, error.statusCode));     
     }
 
 
