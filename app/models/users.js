@@ -54,6 +54,10 @@ function generatePassword(value) {
 }
 
 schema.statics.generatePassword = generatePassword;
+schema.statics.isPasswordEqual = function isPasswordEqual(password, hashedPassword) {
+
+    return hashedPassword === generatePassword(password);
+};
 
 const Users = mongoose.model('users', schema);
 
