@@ -5,6 +5,7 @@ const UsersController   = require('../../../controllers/users');
 const { expect }        = require('chai');
 const Strings           = require('../../../shared/strings');
 const debug             = require('../../../shared/debugger')('unitTest-controllers:users');
+// const sinon             = require('sinon');
 
 describe('Controllers: Users', () => {
     
@@ -204,12 +205,17 @@ describe('Controllers: Users', () => {
                         });
         });
 
-        it('should return an error message if no one user is found', () => {
+        it('should return an error message if no one user is found', sinon.test(function() {
 
             const data = {
                 email: "email",
                 senha: "senha"
             };
+
+            this.mock(Users)
+                .expects('findOne')                
+                .chain('exec')
+                .resolves(null)
 
             return _usersController
                         .auth(data)
@@ -222,7 +228,7 @@ describe('Controllers: Users', () => {
                             expect(result.data.mensagem).not.be.empty;
                             expect(result.data.mensagem).to.be.eql(Strings.INVALID_CREDENTIALS);
                         });
-        });
+        }));
     });
 
 })
