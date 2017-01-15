@@ -194,6 +194,7 @@ describe('Controllers: Users', () => {
             return _usersController
                         .auth(data)
                         .then((result) => {
+
                             expect(result.statusCode).to.exist;
                             expect(result.statusCode).to.be.eql(HttpStatus.BAD_REQUEST);                            
                             expect(result.data).to.be.an('object');
@@ -201,7 +202,27 @@ describe('Controllers: Users', () => {
                             expect(result.data.mensagem).not.be.empty;
                             expect(result.data.mensagem).to.be.eql(Strings.SENHA_FIELD_NOT_FOUND);
                         });
-        })
+        });
+
+        it('should return an error message if no one user is found', () => {
+
+            const data = {
+                email: "email",
+                senha: "senha"
+            };
+
+            return _usersController
+                        .auth(data)
+                        .then((result) => {
+                            
+                            expect(result.statusCode).to.exist;
+                            expect(result.statusCode).to.be.eql(HttpStatus.UNAUTHORIZED);
+                            expect(result.data).to.be.an('object');
+                            expect(result.data.mensagem).to.be.a('string');
+                            expect(result.data.mensagem).not.be.empty;
+                            expect(result.data.mensagem).to.be.eql(Strings.INVALID_CREDENTIALS);
+                        });
+        });
     });
 
 })

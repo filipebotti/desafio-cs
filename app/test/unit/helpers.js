@@ -1,5 +1,7 @@
-const chai      = require('chai');
-const mongoose  = require('mongoose');
+const chai          = require('chai');
+const mongoose      = require('mongoose');
+const { Promise }   = require('q');
 
-// global.expect   = chai.expect;
+
 global.mongoose = mongoose; 
+mongoose.Promise = Promise;

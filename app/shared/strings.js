@@ -7,7 +7,8 @@ const content = {
     TELEFONE_FIELD_AT_LEAST_ONE : "Deve ser informado pelo menos um telefone",
     TELEFONE_FIELD_NOT_VALID    : "Telefone(s) inválido(s), verifique o(s) telefone(s) informado(s), é necessario informa o número e o ddd.",
     INTERNAL_SERVER_ERROR       : "Ops! Algo não funcionou como esperado.",
-    USER_ALREADY_EXISTS         : "Email já existente"
+    USER_ALREADY_EXISTS         : "Email já existente",
+    INVALID_CREDENTIALS         : "Usuário e/ou senha inválidos",
 };
 
 module.exports = content;
