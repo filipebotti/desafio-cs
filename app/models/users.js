@@ -4,6 +4,7 @@ const moment        = require('moment');
 const Guid          = require('guid');
 const jsonSelect    = require('mongoose-json-select');
 const crypto        = require('crypto');
+const debug         = require('../shared/debugger')('models: users');
 
 const Schema = mongoose.Schema;
 
@@ -22,7 +23,8 @@ const schema = new Schema({
     },
     senha: {
         type: String,
-        required: [true, Strings.SENHA_FIELD_NOT_FOUND]
+        required: [true, Strings.SENHA_FIELD_NOT_FOUND],
+        set: (value) => { return generatePassword(value); },
     },
     telefones: {
         type:[],
@@ -46,10 +48,12 @@ const schema = new Schema({
 
 schema.plugin(jsonSelect, '-__v');
 
-schema.statics.generatePassword = function generatePassword(value) {
+function generatePassword(value) {
 
     return crypto.createHash('md5').update(value).digest('hex').toUpperCase();
-};
+}
+
+schema.statics.generatePassword = generatePassword;
 
 const Users = mongoose.model('users', schema);
 
