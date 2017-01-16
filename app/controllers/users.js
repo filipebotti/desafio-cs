@@ -78,7 +78,7 @@ module.exports = (Users) => {
                         return ResponseHelper.errorResponse(Strings.INVALID_CREDENTIALS, HttpStatus.UNAUTHORIZED);
                     
                     const tokenExpirationTime = moment(new Date()).add(30, 'minute');
-                    user.token = jwt.encode({ expirationTime: tokenExpirationTime, id: user._id }, config.jwtSecret);
+                    user.token = jwt.encode({ expirationTime: tokenExpirationTime }, config.jwtSecret);
                     user.ultimo_login = moment(new Date());
                     user.data_atualizacao = user.ultimo_login;
 
