@@ -307,11 +307,16 @@ describe('Controllers: Users', () => {
                         });
         });
 
-        it("should return an erro message if user not found", () => {
+        it("should return an erro message if user not found", sinon.test(function () {
              const data = {
                  token: jwt.encode({ expirationTime: moment(new Date())}, config.jwtSecret),
                  id: "sampleid"
              };
+
+             this.mock(Users)
+                .expects('findOne')                
+                .chain('exec')
+                .resolves(null);
 
              return _usersController
                         .getById(data)
@@ -324,7 +329,7 @@ describe('Controllers: Users', () => {
                             expect(result.data.mensagem).not.be.empty;
                             expect(result.data.mensagem).to.be.eql(Strings.USER_NOT_FOUND);
                         });
-        })
+        }));
     });
 
 });
