@@ -54,12 +54,10 @@ npm test
 **Necessário ter instalado as devDependencies do package.json**
 # Rotas
 
- Todas as rotas estão disponíveis para teste em um cloud da [Azure](http://portal.azure.com) e pode ser acessado pelo endereço abaixo:
+ Todas as rotas estão disponíveis para teste em um cloud da [Azure](http://portal.azure.com) e pode ser acessado pelo endereço  : http://rex-dev.brazilsouth.cloudapp.azure.com:4040/
 
- http://rex-dev.brazilsouth.cloudapp.azure.com:4040/
-
- ## Cadastro de usuário 
- **Rota:** /users/signup  
+## Cadastro de usuário
+ **Rota:** /users/signup  
  **Método:** POST  
  **Input esperado:**  
  ```json
