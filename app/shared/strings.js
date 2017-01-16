@@ -10,7 +10,8 @@ const content = {
     USER_ALREADY_EXISTS         : "Email já existente",
     INVALID_CREDENTIALS         : "Usuário e/ou senha inválidos",
     UNAUTHORIZED                : "Não autorizado",
-    INVALID_SESSION             : "Sessão inválida"
+    INVALID_SESSION             : "Sessão inválida",
+    USER_NOT_FOUND              : "Usuário não encontrado"
 };
 
 module.exports = content;

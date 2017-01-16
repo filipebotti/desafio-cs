@@ -86,14 +86,42 @@ module.exports = (Users) => {
                             .then(user => Users.findOne({ _id: user._id }, { senha: 0}))
                             .then(user => ResponseHelper.defaultResponse(user, HttpStatus.OK));                    
                         
-                });
-
+                })
+                .catch(error => ResponseHelper.errorResponse(error));
     }
 
     function getById(data) {
 
         if(!data.token)
             return ResponseHelper.errorResponse(Strings.UNAUTHORIZED, HttpStatus.UNAUTHORIZED);        
+
+        try {
+
+            const decoded = jwt.decode(data.token, config.jwtSecret);
+            return Users
+                    .findOne({ _id : data.id})
+                    .then(user => {
+                        if(!user || !user._id)
+                            return ResponseHelper.errorResponse(Strings.USER_NOT_FOUND, HttpStatus.UNAUTHORIZED);
+                        
+                        if(user.token !== data.token)
+                            return ResponseHelper.errorResponse(Strings.UNAUTHORIZED, HttpStatus.UNAUTHORIZED);
+
+                        const now = moment(new Date());
+                        const expirationTime = moment(decoded.expirationTime);
+                        const diff = now.diff(expirationTime, 'minute');
+                        if(diff < 30)
+                            return ResponseHelper.defaultResponse(user, HttpStatus.OK);
+                        else
+                            return ResponseHelper.errorResponse(Strings.INVALID_SESSION, HttpStatus.UNAUTHORIZED);                        
+                    })
+                    .catch(error => ResponseHelper.errorResponse(error));
+
+        }catch(error) {
+
+            return ResponseHelper.errorResponse(Strings.UNAUTHORIZED, HttpStatus.UNAUTHORIZED);
+        }
+
         
     }
 
