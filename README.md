@@ -27,7 +27,7 @@ jshint *.js ./app/*.js ./app/**/*.js && DEBUG='desafio'* supervisor server
     1. Para executer ese comando é necessário a instalação do supervisor, caso não queira instalar o supervisor troque _supervisor_ por _node_ no comando acima no package.json em scripts > dev  
     2. Certifique-se de que tenha executado o npm install para instalar as devDependencies**
 
-## Para executer em modo de produção
+## Para executar em modo de produção
 
 Execute o comando
 
