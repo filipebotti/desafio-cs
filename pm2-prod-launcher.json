@@ -4,5 +4,8 @@
   "instances"        : 0, //0 => 'max'
   "watch"            : true,  
   "exec_interpreter" : "node",
-  "exec_mode"        : "cluster"
+  "exec_mode"        : "cluster",
+  "env": {
+    "NODE_ENV": "production"
+  }
 }
