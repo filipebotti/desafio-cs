@@ -57,9 +57,9 @@ npm test
  Todas as rotas estão disponíveis para teste em um cloud da [Azure](http://portal.azure.com) e pode ser acessado pelo endereço  : http://rex-dev.brazilsouth.cloudapp.azure.com:4040/
 
 ## Cadastro de usuário
- **Rota:** /users/signup  
- **Método:** POST  
- **Input esperado:**  
+**Rota:** /users/signup  
+**Método:** POST  
+**Input esperado:**  
  ```json
  {
   "nome": "nome",
@@ -150,7 +150,6 @@ npm test
 }
 ```
 
-
-
-
-
+# Autor
+Filipe Estanieski Botti  
+filipebotti@hotmail.com
