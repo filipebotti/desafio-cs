@@ -35,7 +35,8 @@ const schema = new Schema({
         default: new Date()
     },
     data_atualizacao: {
-        type: Date,        
+        type: Date,   
+        default: new Date()
     },
     ultimo_login: {
         type: Date,
