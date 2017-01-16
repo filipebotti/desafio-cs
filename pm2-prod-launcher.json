@@ -1,0 +1,8 @@
+{
+  "name"             : "desafio-cs",
+  "script"           : "server.js",
+  "instances"        : 0, //0 => 'max'
+  "watch"            : true,  
+  "exec_interpreter" : "node",
+  "exec_mode"        : "cluster"
+}
