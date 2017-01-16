@@ -99,7 +99,7 @@ module.exports = (Users) => {
 
             const decoded = jwt.decode(data.token, config.jwtSecret);
             return Users
-                    .findOne({ _id : data.id})
+                    .findOne({ _id : data.id}, { senha: 0})
                     .then(user => {
                         if(!user || !user._id)
                             return ResponseHelper.errorResponse(Strings.USER_NOT_FOUND, HttpStatus.UNAUTHORIZED);
@@ -110,6 +110,7 @@ module.exports = (Users) => {
                         const now = moment(new Date());
                         const expirationTime = moment(decoded.expirationTime);
                         const diff = now.diff(expirationTime, 'minute');
+                        debug("diff minutes: %j", diff);
                         if(diff < 30)
                             return ResponseHelper.defaultResponse(user, HttpStatus.OK);
                         else
