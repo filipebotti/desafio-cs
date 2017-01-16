@@ -53,7 +53,7 @@ npm test
 
 **Necessário ter instalado as devDependencies do package.json**
 
- # Rotas
+# Rotas
 
  Todas as rotas estão disponíveis para teste em um cloud da [Azure](http://portal.azure.com) e pode ser acessado pelo endereço abaixo:
 
