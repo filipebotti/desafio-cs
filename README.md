@@ -1,5 +1,6 @@
 # Desafio CS
-Projeto em node para o desafio CS. O Projeto está hospedado no cloud da [Azure](http://portal.azure.com) e utiliza [MongoDB](https://www.mongodb.com) para persistência de dados.
+Projeto em node para o desafio CS. O Projeto está hospedado no cloud da [Azure](http://portal.azure.com) e utiliza [MongoDB](https://www.mongodb.com) para persistência de dados.  
+Todas as rotas podem ser testada usando o endereço: http://rex-dev.brazilsouth.cloudapp.azure.com:4040
 
 # Instalação
 Para instalar o projeto bastar clonar o repositório e executar o comando abaixo para isntalar as dependências antes do uso.
@@ -54,7 +55,7 @@ npm test
 **Necessário ter instalado as devDependencies do package.json**
 # Rotas
 
- Todas as rotas estão disponíveis para teste em um cloud da [Azure](http://portal.azure.com) e pode ser acessado pelo endereço  : http://rex-dev.brazilsouth.cloudapp.azure.com:4040/
+ Todas as rotas estão disponíveis para teste em um cloud da [Azure](http://portal.azure.com) e pode ser acessado pelo endereço  : http://rex-dev.brazilsouth.cloudapp.azure.com:4040
 
 ## Cadastro de usuário
 **Rota:** /users/signup  
